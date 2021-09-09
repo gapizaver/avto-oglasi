@@ -40,6 +40,7 @@ class CreateAdsTable extends Migration
             'e' - electricity,
             'h' - hydrogen */
 
+            $table->double("displacement");  // engine displacement in liters
             $table->integer("horses");      // horse power
             $table->integer("milage");      // milage in km
             $table->integer("year");        // year of car production

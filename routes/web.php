@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Ad;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
+});
+
+
+Route::get('/latest', function () {
+    return view('ads', [
+        "ads" => Ad::latest()->get()
+    ]);
+});
+
+
+Route::get("/ad/{ad}", function (Ad $ad) {
+    return view("ad", [
+        "ad" => $ad,
+        //"publisher" => $ad->publisher,
+    ]);
+});
+
+Route::get('user/{user}', function (User $user) {
+    return view("user", [
+        "user" => $user,
+        "ads" => $user->ads,
+    ]);
 });

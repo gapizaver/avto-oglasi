@@ -41,11 +41,12 @@ class AdFactory extends Factory
                 "pu"
             ]),
             "price" => $this->faker->numberBetween(500, 10000),
-            "fuel" => $this->faker->randomElement(["g", "d", "e", "h"]),
+            "fuel" => $this->faker->randomElement(["g", "d", "e", "h", "b"]),
+            "transmission" => $this->faker->randomElement(["m", "a"]),
             "year" => $this->faker->numberBetween(1990, 2019),
             "displacement" => $this->faker->randomFloat(1, 1, 3),
             "horses" => $this->faker->numberBetween(75, 200),
-            "milage" => $this->faker->numberBetween(10000, 300000),
+            "mileage" => $this->faker->numberBetween(10000, 300000),
             "desc" => $this->faker->text(),
         ];
     }

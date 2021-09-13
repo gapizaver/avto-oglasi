@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdController;
 use App\Models\Ad;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -20,11 +21,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/latest', function () {
-    return view('ads', [
-        "ads" => Ad::latest()->get()
-    ]);
-});
+Route::get('/results', [AdController::class, "search"])->name("results");
 
 
 Route::get("/ad/{ad}", function (Ad $ad) {

@@ -38,13 +38,15 @@ class CreateAdsTable extends Migration
             'g' - gasoline,
             'd' - diesel,
             'e' - electricity,
+            'b' - hybrid,
             'h' - hydrogen */
 
-            $table->double("displacement");  // engine displacement in liters
-            $table->integer("horses");      // horse power
-            $table->integer("milage");      // milage in km
-            $table->integer("year");        // year of car production
-            $table->text("desc");           // seller's description
+            $table->double("displacement");     // engine displacement in liters
+            $table->integer("horses");          // horse power
+            $table->integer("mileage");         // milage in km
+            $table->integer("year");            // year of car production
+            $table->text("desc");               // seller's description
+            $table->char("transmission", 1);     // 'a' - automatic, 'm' - manual
             $table->timestamps();
         });
     }

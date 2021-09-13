@@ -1,5 +1,7 @@
 <x-layout>
 
+<x-dropdown-menu />
+
 @foreach ($ads as $ad)
 
     <x-ad-card :ad=$ad />
@@ -9,5 +11,7 @@
     @endif
 
 @endforeach
+
+{{ $ads->links() }}
 
 </x-layout>

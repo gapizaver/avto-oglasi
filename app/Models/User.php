@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        "phone",
         'password',
     ];
 
@@ -41,6 +42,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // password mutator
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes["password"] = bcrypt($password);
+    }
 
     // get the users ads
     public function ads() {

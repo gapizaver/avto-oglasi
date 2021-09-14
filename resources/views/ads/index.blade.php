@@ -20,15 +20,20 @@
     }
 </script>
 
+
+@include("ads._header")
+
+
 @php
     // all the available car brands
     $carBrands = ["Honda", "Acura", "Alfa-romeo", "Aston-Martin", "Audi", "Bently", "BMW", "Bugatti", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Citroen", "Dodge", "Ferrari", "Fiat", "Ford", "Geely", "Genesis", "GMC", "Hyundai", "Infiniti", "Jaguar", "Jeep", "Kia", "Koenigsegg", "Lamborghini", "Lancia", "Land ROver", "Lexus", "lincoln", "Lotus", "Maserati", "Maybah", "Mazda", "Mclaren", "Mercedes", "Mini", "Mitsubishi", "Nissan", "Opel", "Pagani", "Peugeot", "Pontiac", "Porsche", "Ram", "Renault", "Rolls-Royce", "Škoda", "Smart", "Subaru", "Suzuki", "Testla", "Toyota", "Volkswagen", "Volvo"];
 @endphp
 
+
 <h2>Išči oglase</h2>
 
-{{-- form for searching the ads --}}
 
+{{-- form for searching the ads --}}
 <form action="/results" method="get">
     {{-- SEARCH PARAMETERS --}}
 

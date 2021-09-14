@@ -13,5 +13,9 @@
 
     {{ $slot }}
 
+
+{{-- flash messages --}}
+<x-flash-message key="success" />
+
 </body>
 </html>

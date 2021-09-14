@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class AdController extends Controller
 {
     public function search() {
-        return view('ads', [
+        return view('ads.ads', [
             "ads" => Ad::filter(request([
                 "order",
                 "brand",

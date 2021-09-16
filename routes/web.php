@@ -39,12 +39,19 @@ Route::get('user/{user}', function (User $user) {
     ]);
 });
 
+// guest
 Route::middleware('guest')->group(function () {
     Route::get("/register", [RegisterController::class, "create"]);
     Route::post("/register", [RegisterController::class, "store"]);
 
-    Route::get("/login", [SessionController::class, "create"]);
+    Route::get("/login", [SessionController::class, "create"])->name("login");
     Route::post("/session", [SessionController::class, "store"]);
 });
 
 Route::post("logout", [SessionController::class, "destroy"])->middleware("auth");
+
+// logged in
+Route::middleware('auth')->group(function () {
+    Route::get("/createad", [AdController::class, "create"]);
+    Route::post("/createad", [AdController::class, "store"]);
+});

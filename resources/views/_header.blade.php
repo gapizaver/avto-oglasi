@@ -1,5 +1,15 @@
 <div class="w-screen bg-gray-400 h-20 px-10 py-5">
 
+    {{-- New ad button --}}
+    <a href="/createad">
+        <button
+            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-3"
+        >
+            Objavi oglas
+        </button>
+    </a>
+
+
     {{-- display login button if guest, otherwise register button --}}
     @guest
 
@@ -8,7 +18,7 @@
         <button
             class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
         >
-            Login
+            Prijava
         </button>
     </a>
 
@@ -17,13 +27,13 @@
         <button
             class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
         >
-            Register
+            Registracija
         </button>
     </a>
 
     @else
     {{-- Logout form with button --}}
-    <form method="POST" action="/logout">
+    <form method="POST" action="/logout" class="inline-block">
     @csrf
 
     <button
@@ -33,5 +43,4 @@
     </button>
     </form>
     @endguest
-
 </div>

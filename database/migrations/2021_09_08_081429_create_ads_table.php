@@ -15,7 +15,7 @@ class CreateAdsTable extends Migration
     {
         Schema::create('ads', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id");
+            $table->foreignId("user_id")->constrained()->cascadeOnDelete();
             $table->char("condition");       //n-new, u-used, c-crashed
             $table->string("brand");
             $table->string("model");

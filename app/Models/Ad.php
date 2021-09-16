@@ -11,6 +11,7 @@ class Ad extends Model
 
     protected $with = ["publisher"];
 
+    protected $guarded = [];
 
     // search filters
     public function scopeFilter($query, array $filters) {

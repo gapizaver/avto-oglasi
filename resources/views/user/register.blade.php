@@ -75,6 +75,7 @@
                     type="password"
                     name="password"
                     required
+                    autocomplete="new-password"
             >
 
             @error("password")

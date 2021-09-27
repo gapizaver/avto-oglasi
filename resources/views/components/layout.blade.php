@@ -19,16 +19,15 @@
 
 <body class="bg-gray-50">
 
-
+    <div class="flex flex-col min-h-screen justify-between">
     @include("_header")
 
-    {{ $slot }}
+        {{-- flash messages --}}
+        <x-flash-message key="success" />
 
+        {{ $slot }}
 
-    {{-- flash messages --}}
-    <x-flash-message key="success" />
-
-    @include("_footer")
-
+        @include("_footer")
+    </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<div class="w-full bg-purple-700 py-3 relative bottom-0 left-0 text-center">
+<div class="mt-auto w-full bg-purple-700 py-3 relative bottom-0 left-0 text-center">
     <p class="text-white inline-block text-sm">
         Developed by
         <a

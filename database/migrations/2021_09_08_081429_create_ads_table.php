@@ -16,7 +16,8 @@ class CreateAdsTable extends Migration
         Schema::create('ads', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->constrained()->cascadeOnDelete();
-            $table->char("condition");       //n-new, u-used, c-crashed
+            $table->string("images")->nullable();        // paths to images
+            $table->char("condition");                  //n-new, u-used, c-crashed
             $table->string("brand");
             $table->string("model");
             $table->char("body_type", 2);
@@ -45,7 +46,7 @@ class CreateAdsTable extends Migration
             $table->integer("horses");          // horse power
             $table->integer("mileage");         // milage in km
             $table->integer("year");            // year of car production
-            $table->text("desc");               // seller's description
+            $table->text("desc")->nullable();               // seller's description
             $table->char("transmission", 1);     // 'a' - automatic, 'm' - manual
             $table->timestamps();
         });

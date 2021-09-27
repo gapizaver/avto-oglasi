@@ -1,17 +1,11 @@
 <x-layout>
+    <x-canvas>
+        <x-dropdown-menu />
 
-<x-dropdown-menu />
+        @foreach ($ads as $ad)
+            <x-card.card :ad=$ad />
+        @endforeach
 
-@foreach ($ads as $ad)
-
-    <x-ad-card :ad=$ad />
-
-    @unless ($loop->last)
-        <hr size="1">
-    @endif
-
-@endforeach
-
-{{ $ads->links() }}
-
+        {{ $ads->links() }}
+    </x-canvas>
 </x-layout>

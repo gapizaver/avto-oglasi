@@ -13,6 +13,41 @@ class Ad extends Model
 
     protected $guarded = [];
 
+
+    # get the fuel string for display
+    public function getFuel(){
+        switch ($this->fuel) {
+            case 'g':
+                return "bencincki motor";
+                break;
+            case 'd':
+                return "diesel motor";
+                break;
+            case 'e':
+                return "električni motor";
+                break;
+            case 'b':
+                return "hibridni pogon";
+                break;
+            case 'h':
+                return "vodikov motor";
+                break;
+        }
+    }
+
+    # get the fuel string for display
+    public function getTransmission(){
+        switch ($this->transmission) {
+            case 'a':
+                return "avtomatski";
+                break;
+            case 'm':
+                return "ročni";
+                break;
+        }
+    }
+
+
     // search filters
     public function scopeFilter($query, array $filters) {
         //dd($filters);

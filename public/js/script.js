@@ -15,3 +15,53 @@ function selectCheckbox(className) {
     var input = document.getElementById(className);
     input.value = vals;
 }
+
+// toggle display of dropdown
+function onClick() {
+    var dd = document.getElementById("dropdown");
+    dd.classList.toggle("hidden");
+    dd.classList.toggle("block");
+}
+
+
+$(document).ready(function(){
+    // change main image in ad.blade
+    $(".img-sm").click(function(e){
+        $("#img-main").attr("src", this.src);
+
+        $(".img-sm").each(function(i) {
+            $(this).removeClass("border-4");
+        });
+
+        $(this).addClass("border-4");
+    });
+
+    /*
+    *   Uploading images in createad.blade
+    */
+
+    var imageCount = 0;
+
+    // image upload handler
+    $("#img_input").change(function() {
+        // newly uploaded images
+        let images = $(this)[0].files;
+
+        $("#image-label span").text("Ponovno naloži fotografije")
+
+        // check if more than 5 images already
+        if (images.length > 5) {
+            alert("naložite lahko največ 5 fotografij!");
+            return;
+        }
+
+        $("#img-holder").empty();
+        // loop through images
+        for (let i = 0; i < images.length; i++) {
+            // append image "description"
+            $("#img-holder").append(
+                '<div class="mb-1 p-1.5 flex justify-between w-full rounded-md bg-gray-100"><p class="text-gray-700 text-sm">'+ images[i].name +'</p></div>'
+            );
+        };
+    });
+});

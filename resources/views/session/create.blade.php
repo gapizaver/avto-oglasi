@@ -1,53 +1,38 @@
 <x-layout>
-    <h1>Prijava</h1>
-
-    {{-- LOG IN FORM --}}
-    <form action="/session" method="post">
+    <x-form.form action="/session" method="post" heading="Prijava" :width=600>
         @csrf
 
         {{-- email --}}
-        <div class="mb-6">
-            <label  class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                    for="email"
-            >
-                Email*
-            </label>
-            <input  class="border border-gray-400 p-2 w-fill"
-                    type="email"
-                    name="email"
-                    value="{{ old("email") }}"
-                    required
-            >
+        <x-form.input
+            type="email"
+            name="email"
+            class="max-w-sm"
+            required
+        >
+            Email naslov
+        </x-form.input>
 
-            @error("email")
-                <p class="text-red-500">{{ $message }}</p>
-            @enderror
-        </div>
 
         {{-- password --}}
-        <div class="mb-6">
-            <label  class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                    for="password"
-            >
-                Geslo*
-            </label>
-            <input  class="border border-gray-400 p-2 w-fill"
-                    type="password"
-                    name="password"
-                    required
-            >
+        <x-form.input
+            type="password"
+            name="password"
+            class="max-w-sm"
+            required
+        >
+            Geslo
+        </x-form.input>
 
-            @error("password")
-                <p class="text-red-500">{{ $message }}</p>
-            @enderror
+        <p class="text-gray-700 text-sm mb-2">
+            Še nimaš računa?
+            <a href="/register" class="underline font-bold">
+                Registriraj se!
+            </a>
+        </p>
 
-        </div>
-
-        <div class="mb-6">
-            <button type="submit"
-                    class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500"
-            >
-                Prijava
-        </div>
-    </form>
+        {{-- login button --}}
+        <x-form.button type="submit" class="mt-4">
+            Prijava
+        </x-form.button>
+    </x-form.form>
 </x-layout>

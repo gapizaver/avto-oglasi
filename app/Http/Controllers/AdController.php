@@ -26,7 +26,8 @@ class AdController extends Controller
                 "displacementMax",
                 "fuel",
                 "body_type",
-                "transmission"
+                "transmission",
+                "images"
             ]))->paginate(10)
         ]);
     }
@@ -37,7 +38,6 @@ class AdController extends Controller
 
     public function store() {
         // validation for publishing an ad
-        //dd(request());
         $attributes = request()->validate([
             "condition" => ["required", Rule::in(["n", "u", "c"])],
             "model" => ["required", "max:255"],
@@ -61,11 +61,26 @@ class AdController extends Controller
             "horses" => ["required", "integer", "min:1", "max:3000"],
             "fuel" => ["required", Rule::in(["g", "d", "e", "h", "b"])],
             "transmission" => ["required", Rule::in(["m", "a"])],
-            "desc" => ["max:10000"]
+            "desc" => ["max:10000"],
+            "images.*" => ["image"]
         ]);
+
+        $attributes["images"] = "";
+        if (request()->hasFile("images")) {
+            foreach(request()->file('images') as $key => $file) {
+                $attributes["images"] .= " ". $file->store("/images", "public");
+            }
+        }
 
         // add id with publisher's id
         $ad = Ad::create(array_merge($attributes, ["user_id" => auth()->user()->id]));
+
+        // store images
+        if (request()->hasFile("images")) {
+            foreach(request()->file('images') as $key => $file) {
+
+            }
+        }
 
         return redirect("/ad/" . $ad->id)->with("success", "Oglas je bil uspešno ustvarjen.");
     }

@@ -1,152 +1,145 @@
 <x-layout>
 
-    @php
-        // all the available car brands
-        $carBrands = ["Honda", "Acura", "Alfa-romeo", "Aston-Martin", "Audi", "Bently", "BMW", "Bugatti", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Citroen", "Dodge", "Ferrari", "Fiat", "Ford", "Geely", "Genesis", "GMC", "Hyundai", "Infiniti", "Jaguar", "Jeep", "Kia", "Koenigsegg", "Lamborghini", "Lancia", "Land ROver", "Lexus", "lincoln", "Lotus", "Maserati", "Maybah", "Mazda", "Mclaren", "Mercedes", "Mini", "Mitsubishi", "Nissan", "Opel", "Pagani", "Peugeot", "Pontiac", "Porsche", "Ram", "Renault", "Rolls-Royce", "Škoda", "Smart", "Subaru", "Suzuki", "Testla", "Toyota", "Volkswagen", "Volvo"];
-    @endphp
-
-
-    <h2>Ustvari oglas</h2>
-
-
     {{-- form for searching the ads --}}
-    <form action="/createad" method="post">
+    <x-form.form action="/createad" method="post" enctype="multipart/form-data" heading="Objavi oglas">
         @csrf
 
-        {{-- SEARCH PARAMETERS --}}
-
-        {{-- condition --}}
-        <label>Stanje: <label>
-        <input name="condition" type="radio" value="u" checked>
-        <label>Rabljeno</label>
-        <input name="condition" type="radio" value="n">
-        <label>Novo</label>
-        <input name="condition" type="radio" value="c">
-        <label">Karambolirano</label>
-        <br><br>
-
         {{-- brand --}}
-        <label for="brand">Znamka: </label>
-        <select name="brand">
-            {{-- add option for each of available car brands --}}
-            @foreach ($carBrands as $brand)
-                <option value="{{ strtolower($brand) }}">
-                    {{ $brand }}
-                </option>
-            @endforeach
-        </select>
-        @error("brand")
-                <p class="text-red-500">{{ $message }}</p>
-            @enderror
-        <br><br>
+        <x-form.brand-input />
 
         {{-- model --}}
-        <label for="model">Model: </label>
-        <input type="text" name="model">
-        @error("model")
-                <p class="text-red-500">{{ $message }}</p>
-            @enderror
-        <br><br>
+        <x-form.input name="model"> Model </x-form.input>
 
-        {{-- price --}}
-        <label for="price">Cena [€]: </label>
-        <input type="number" name="price">
-        @error("price")
-                <p class="text-red-500">{{ $message }}</p>
-            @enderror
-        <br><br>
+        {{-- condition --}}
+        <p class="text-gray-700 text-lg">Stanje</p>
+
+        <div class="grid grid-flow-col grid-cols-2 md:grid-cols-3 grid-rows-2 md:grid-rows-1 gap-2">
+            <x-form.checkbox name="condition" type="radio" value="u" checked>
+                Rabljeno
+            </x-form.checkbox>
+            <x-form.checkbox name="condition" type="radio" value="n">
+                Novo
+            </x-form.checkbox>
+            <x-form.checkbox name="condition" type="radio" value="c">
+                Karambolirano
+            </x-form.checkbox>
+        </div>
+
+        @error("condition")
+            <p class="text-red-500">{{ $message }}</p>
+        @enderror
+
+        {{-- image input --}}
+        <x-form.input-image />
 
         {{-- body types --}}
-        <label>Oblika: </label>
-        <input name="body_type" type="radio" value="li" checked>
-        <label for="li">Limuzina</label>
-        <input name="body_type" type="radio" value="hb">
-        <label for="hb">Kombilimuzina</label>
-        <input name="body_type" type="radio" value="ca">
-        <label for="ca">Karavan</label>
-        <input name="body_type" type="radio" value="co">
-        <label for="co">Coupe</label>
-        <input name="body_type" type="radio" value="mv">
-        <label for="mv">Minivan</label>
-        <input name="body_type" type="radio" value="cb">
-        <label for="cb">Cabrio</label>
-        <input name="body_type" type="radio" value="su">
-        <label for="su">SUV</label>
-        <input name="body_type" type="radio" value="pu">
-        <label for="pu">Pick-up</label>
+        <span class="text-gray-700 text-lg">Oblika</span>
+        <br>
+
+        <div class="grid grid-flow-col grid-cols-2 md:grid-cols-3 grid-rows-4 md:grid-rows-3 gap-2">
+            <x-form.checkbox name="body_type" type=radio value="li" checked>
+                Limuzina
+            </x-form.checkbox>
+            <x-form.checkbox name="body_type" type=radio value="hb">
+                Kombilimuzina
+            </x-form.checkbox>
+            <x-form.checkbox name="body_type" type=radio value="ca">
+                Karavan
+            </x-form.checkbox>
+            <x-form.checkbox name="body_type" type=radio value="co">
+                Coupe
+            </x-form.checkbox>
+            <x-form.checkbox name="body_type" type=radio value="mv">
+                Minivan
+            </x-form.checkbox>
+            <x-form.checkbox name="body_type" type=radio value="cb">
+                Cabrio
+            </x-form.checkbox>
+            <x-form.checkbox name="body_type" type=radio value="su">
+                SUV
+            </x-form.checkbox>
+            <x-form.checkbox name="body_type" type=radio value="pu">
+                Pick-up
+            </x-form.checkbox>
+        </div>
+
         @error("body_type")
-                <p class="text-red-500">{{ $message }}</p>
-            @enderror
-        <br><br>
+        <p class="text-red-500">{{ $message }}</p>
+        @enderror
 
         {{-- year --}}
-        <label for="year">Letnik : </label>
-        <input type="number" name="year" value="{{ date("Y") }}">
-        @error("year")
-                <p class="text-red-500">{{ $message }}</p>
-            @enderror
-        <br><br>
+        <x-form.input-number value="{{ date('Y') }}" name="year">
+            Letnik
+        </x-form.input-number>
 
         {{-- mileage --}}
-        <label for="mileage">Prevoženi kilometri: </label>
-        <input type="number" name="mileage">
-        @error("mileage")
-                <p class="text-red-500">{{ $message }}</p>
-            @enderror
-        <br><br>
+        <x-form.input-number name="mileage">
+            Prevoženi kilometri
+        </x-form.input-number>
 
         {{-- displacement --}}
-        <label for="displacement">Prostornina motorja [L]: </label>
-        <input type="number" step=".1" name="displacement" placeholder="1.4">
-        @error("displacement")
-                <p class="text-red-500">{{ $message }}</p>
-            @enderror
-        <br><br>
+        <x-form.input-number step=".1" name="displacement" placeholder="1.4">
+            Prostornina motorja [L]
+        </x-form.input-number>
 
         {{-- horse power --}}
-        <label for="horses">Moč motorja [hp]: </label>
-        <input type="number" name="horses">
-        @error("horses")
-                <p class="text-red-500">{{ $message }}</p>
-            @enderror
-        <br><br>
+        <x-form.input-number name="horses">
+            Moč motorja [KM]
+        </x-form.input-number>
 
         {{-- fuel --}}
-        <label>Gorivo: </label>
-        <input name="fuel" type="radio" value="g" checked>
-        <label for="g">Bencin</label>
-        <input name="fuel" type="radio" value="d">
-        <label for="d">Diesel</label>
-        <input name="fuel" type="radio" value="e">
-        <label for="e">Elektrika</label>
-        <input name="fuel" type="radio" value="b">
-        <label for="b">Hibrid</label>
-        <input name="fuel" type="radio" value="h">
-        <label for="h">Vodik</label>
+        <span class="text-gray-700 text-lg">Gorivo</span>
+        <br>
+
+        <div class="grid grid-flow-col grid-cols-2 md:grid-cols-3 grid-rows-3 md:grid-rows-2 gap-2 pb-4">
+            <x-form.checkbox name="fuel" type="radio" value="g" checked>
+                Bencin
+            </x-form.checkbox>
+            <x-form.checkbox name="fuel" type="radio" value="d">
+                Diesel
+            </x-form.checkbox>
+            <x-form.checkbox name="fuel" type="radio" value="e">
+                Elektrika
+            </x-form.checkbox>
+            <x-form.checkbox name="fuel" type="radio" value="b">
+                Hibrid
+            </x-form.checkbox>
+            <x-form.checkbox name="fuel" type="radio" value="h">
+                Vodik
+            </x-form.checkbox>
+        </div>
 
         @error("fuel")
-            <p class="text-red-500">{{ $message }}</p>
+        <p class="text-red-500">{{ $message }}</p>
         @enderror
-        <br><br>
 
         {{-- transmission --}}
-        <label>Menjalnik: </label>
-        <input name="transmission" type="radio" value="m"" checked>
-        <label for="m">Ročni</label>
-        <input name="transmission" type="radio" value="a"">
-        <label for="a">Avtomatski</label>
+        <span class="text-gray-700 text-lg">Menjalnik</span>
+        <br>
+
+        <div class="grid grid-flow-col grid-cols-3 gap-2">
+            <x-form.checkbox name="transmission" value="m" type="radio" checked>
+                Ročni
+            </x-form.checkbox>
+            <x-form.checkbox name="transmission" value="a" type="radio">
+                Avtomatski
+            </x-form.checkbox>
+        </div>
+
         @error("transmission")
-            <p class="text-red-500">{{ $message }}</p>
+        <p class="text-red-500">{{ $message }}</p>
         @enderror
-        <br><br>
 
         {{-- description --}}
-        <label>Opis: </label>
-        <input type="text" name="desc">
-        <br><br>
+        <x-form.input-text name="desc">Opis</x-form.input-text>
 
-        <input type="submit" value="Objavi">
-    </form>
+        {{-- price --}}
+        <x-form.input-number name="price"> Cena [€] </x-form.input-number>
 
-    </x-layout>
+        {{-- submit button --}}
+        <x-form.button type="submit" class="mt-8">
+            Objavi
+        </x-form.button>
+    </x-form.form>
+</x-layout>
 

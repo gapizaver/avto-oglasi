@@ -1,128 +1,161 @@
 <x-layout>
 
-
-    @php
-        // all the available car brands
-        $carBrands = ["Honda", "Acura", "Alfa-romeo", "Aston-Martin", "Audi", "Bently", "BMW", "Bugatti", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Citroen", "Dodge", "Ferrari", "Fiat", "Ford", "Geely", "Genesis", "GMC", "Hyundai", "Infiniti", "Jaguar", "Jeep", "Kia", "Koenigsegg", "Lamborghini", "Lancia", "Land ROver", "Lexus", "lincoln", "Lotus", "Maserati", "Maybah", "Mazda", "Mclaren", "Mercedes", "Mini", "Mitsubishi", "Nissan", "Opel", "Pagani", "Peugeot", "Pontiac", "Porsche", "Ram", "Renault", "Rolls-Royce", "Škoda", "Smart", "Subaru", "Suzuki", "Testla", "Toyota", "Volkswagen", "Volvo"];
-    @endphp
-
-
-    <h2>Išči oglase</h2>
-
-
     {{-- form for searching the ads --}}
-    <form action="/results" method="get">
+    <x-form.form heading="Išči oglase" action="/results" method="get">
+
         {{-- SEARCH PARAMETERS --}}
 
         {{-- brand --}}
-        <label for="brand">Znamka: </label>
-        <select name="brand">
-            {{-- add option for each of available car brands --}}
-            @foreach ($carBrands as $brand)
-                <option value="{{ strtolower($brand) }}">
-                    {{ $brand }}
-                </option>
-            @endforeach
-        </select>
-        <br><br>
+        <x-form.brand-input />
 
         {{-- model --}}
-        <label for="brand">Model: </label>
-        <input type="text" name="model">
-        <br><br>
+        <x-form.input name="model">
+            Model
+        </x-form.input>
+
+        {{-- condition --}}
+        <p class="text-gray-700 text-lg">Stanje</p>
+
+        <div class="grid grid-flow-col grid-cols-2 md:grid-cols-3 grid-rows-2 md:grid-rows-1 gap-2">
+            <x-form.checkbox class="condition" id="u" onclick="selectCheckbox('condition')" checked>
+                Rabljeno
+            </x-form.checkbox>
+            <x-form.checkbox class="condition" id="n" onclick="selectCheckbox('condition')" checked>
+                Novo
+            </x-form.checkbox>
+            <x-form.checkbox class="condition" id="c" onclick="selectCheckbox('condition')" checked>
+                Karambolirano
+            </x-form.checkbox>
+            {{-- hidden input for body types checkboxes --}}
+            {{-- filled with javascript --}}
+            <input type="hidden" id="condition" name="condition">
+        </div>
 
         {{-- price --}}
-        <label for="priceMin">Cena [€]: </label>
-        <input type="number" name="priceMin" placeholder="min">
-        <input type="number" name="priceMax" placeholder="max">
-        <br><br>
+        <x-form.input-minmax name="price">
+            Cena [€]
+        </x-form.input>
 
         {{-- body types --}}
-        <label>Oblika: </label>
-        <input class="body_type" type="checkbox" id="li" onclick="selectCheckbox('body_type') checked>
-        <label for="li">Limuzina</label>
-        <input class="body_type" type="checkbox" id="hb" onclick="selectCheckbox('body_type') checked>
-        <label for="hb">Kombilimuzina</label>
-        <input class="body_type" type="checkbox" id="ca" onclick="selectCheckbox('body_type') checked>
-        <label for="ca">Karavan</label>
-        <input class="body_type" type="checkbox" id="co" onclick="selectCheckbox('body_type') checked>
-        <label for="co">Coupe</label>
-        <input class="body_type" type="checkbox" id="mv" onclick="selectCheckbox('body_type') checked>
-        <label for="mv">Minivan</label>
-        <input class="body_type" type="checkbox" id="cb" onclick="selectCheckbox('body_type') checked>
-        <label for="cb">Cabrio</label>
-        <input class="body_type" type="checkbox" id="su" onclick="selectCheckbox('body_type') checked>
-        <label for="su">SUV</label>
-        <input class="body_type" type="checkbox" id="pu" onclick="selectCheckbox('body_type') checked>
-        <label for="pu">Pick-up</label>
-        {{-- hidden input for body types checkboxes --}}
-        {{-- filled with javascript --}}
-        <input type="hidden" id="body_type" name="body_type">
+        <span class="text-gray-700 text-lg">Oblika</span>
+        <br>
 
-        <br><br>
+        <div class="grid grid-flow-col grid-cols-2 md:grid-cols-3 grid-rows-4 md:grid-rows-3 gap-2">
+            <x-form.checkbox class="body_type" id="li" onclick="selectCheckbox('body_type')" checked>
+                Limuzina
+            </x-form.checkbox>
+            <x-form.checkbox class="body_type" id="hb" onclick="selectCheckbox('body_type')" checked>
+                Kombilimuzina
+            </x-form.checkbox>
+            <x-form.checkbox class="body_type" id="ca" onclick="selectCheckbox('body_type')" checked>
+                Karavan
+            </x-form.checkbox>
+            <x-form.checkbox class="body_type" id="co" onclick="selectCheckbox('body_type')" checked>
+                Coupe
+            </x-form.checkbox>
+            <x-form.checkbox class="body_type" id="mv" onclick="selectCheckbox('body_type')" checked>
+                Minivan
+            </x-form.checkbox>
+            <x-form.checkbox class="body_type" id="cb" onclick="selectCheckbox('body_type')" checked>
+                Cabrio
+            </x-form.checkbox>
+            <x-form.checkbox class="body_type" id="su" onclick="selectCheckbox('body_type')" checked>
+                SUV
+            </x-form.checkbox>
+            <x-form.checkbox class="body_type" id="pu" onclick="selectCheckbox('body_type')" checked>
+                Pick-up
+            </x-form.checkbox>
+            {{-- hidden input for body types checkboxes --}}
+            {{-- filled with javascript --}}
+            <input type="hidden" id="body_type" name="body_type">
+        </div>
+
+        @error("body_type")
+            <p class="text-red-500">{{ $message }}</p>
+        @enderror
 
         {{-- year --}}
-        <label for="yearMin">Letnik : </label>
-        <input type="number" name="yearMin" placeholder="min">
-        <input type="number" name="yearMax" placeholder="max">
-        <br><br>
+        <x-form.input-minmax name="year">
+            Letnik
+        </x-form.input>
 
         {{-- mileage --}}
-        <label>Prevoženi kilometri: </label>
-        <input type="number" name="mileageMin" placeholder="min">
-        <input type="number" name="mileageMax" placeholder="max">
-        <br><br>
+        <x-form.input-minmax name="mileage">
+            Prevoženi kilometri
+        </x-form.input>
 
         {{-- displacement --}}
-        <label>Prostornina motorja [L]: </label>
-        <input type="number" name="displacementMin" placeholder="min">
-        <input type="number" name="displacementMax" placeholder="max">
-        <br><br>
+        <x-form.input-minmax name="displacement">
+            Prostornina motorja [L]
+        </x-form.input>
 
         {{-- horse power --}}
-        <label>Moč motorja [hp]: </label>
-        <input type="number" name="horsesMin" placeholder="min">
-        <input type="number" name="horsesMax" placeholder="max">
-        <br><br>
+        <x-form.input-minmax name="horses">
+            Moč motorja [hp]
+        </x-form.input>
 
         {{-- fuel --}}
-        <label>Gorivo: </label>
-        <input class="fuel" type="checkbox" id="g" onclick="selectCheckbox('fuel')" checked>
-        <label for="g">Bencin</label>
-        <input class="fuel" type="checkbox" id="d" onclick="selectCheckbox('fuel')" checked>
-        <label for="d">Diesel</label>
-        <input class="fuel" type="checkbox" id="e" onclick="selectCheckbox('fuel')" checked>
-        <label for="e">Elektrika</label>
-        <input class="fuel" type="checkbox" id="b" onclick="selectCheckbox('fuel')" checked>
-        <label for="b">Hibrid</label>
-        <input class="fuel" type="checkbox" id="h" onclick="selectCheckbox('fuel')" checked>
-        <label for="h">Vodik</label>
+        <span class="text-gray-700 text-lg">Gorivo</span>
+        <br>
 
-        {{-- hidden input for fuel checkboxes --}}
-        {{-- filled with javascript --}}
-        <input type="hidden" id="fuel" name="fuel">
-        <br><br>
+        <div class="grid grid-flow-col grid-cols-2 md:grid-cols-3 grid-rows-3 md:grid-rows-2 gap-2 pb-4">
+            <x-form.checkbox class="fuel" id="g" onclick="selectCheckbox('fuel')" checked>
+                Bencin
+            </x-form.checkbox>
+            <x-form.checkbox class="fuel" id="d" onclick="selectCheckbox('fuel')" checked>
+                Diesel
+            </x-form.checkbox>
+            <x-form.checkbox class="fuel" id="e" onclick="selectCheckbox('fuel')" checked>
+                Elektrika
+            </x-form.checkbox>
+            <x-form.checkbox class="fuel" id="b" onclick="selectCheckbox('fuel')" checked>
+                Hibrid
+            </x-form.checkbox>
+            <x-form.checkbox class="fuel" id="h" onclick="selectCheckbox('fuel')" checked>
+                Vodik
+            </x-form.checkbox>
+            {{-- hidden input for fuel checkboxes --}}
+            {{-- filled with javascript --}}
+            <input type="hidden" id="fuel" name="fuel">
+        </div>
+
+        @error("fuel")
+            <p class="text-red-500">{{ $message }}</p>
+        @enderror
 
         {{-- transmission --}}
-        <label>Menjalnik: </label>
-        <input class="transmission" type="checkbox" id="m" onclick="selectCheckbox('transmission')" checked>
-        <label for="m">Ročni</label>
-        <input class="transmission" type="checkbox" id="a" onclick="selectCheckbox('transmission')" checked>
-        <label for="a">Avtomatski</label>
-        {{-- hidden input for transmission checkboxes --}}
-        {{-- filled with javascript --}}
-        <input type="hidden" id="transmission" name="transmission">
-        <br><br>
+        <span class="text-gray-700 text-lg">Menjalnik</span>
+        <br>
 
+        <div class="grid grid-flow-col grid-cols-2 md:grid-cols-3 gap-2 pb-6">
+            <x-form.checkbox class="transmission" id="m" onclick="selectCheckbox('transmission')" checked>
+                Ročni
+            </x-form.checkbox>
+            <x-form.checkbox class="transmission" id="a" onclick="selectCheckbox('transmission')" checked>
+                Avtomatski
+            </x-form.checkbox>
+            {{-- hidden input for transmission checkboxes --}}
+            {{-- filled with javascript --}}
+            <input type="hidden" id="transmission" name="transmission">
+        </div>
 
-        <input type="submit" value="Išči">
-    </form>
+        @error("transmission")
+            <p class="text-red-500">{{ $message }}</p>
+        @enderror
 
+        {{-- bottom buttons --}}
+        <div class="md:flex md:justify-between mt-4">
+            {{-- <input type="submit" value="Išči"> --}}
+            <x-form.button type="submit">IŠČI</x-form.button>
 
-    <hr>
+            <p class="md:my-auto my-2 text-center">ali</p>
 
-    <a href="/results">
-        <button type="button">Prikaži najnovejše oglasi</button>
-    </a>
+            <a href="/results" class="my-auto">
+                <x-form.button-small type="button">
+                    Prikaži najnovejše oglase
+                </x-form.button-small>
+            </a>
+        </div>
 
+    </x-form>
 </x-layout>

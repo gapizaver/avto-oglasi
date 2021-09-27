@@ -1,15 +1,17 @@
 @props(["active" => false])
 
-<li>
-    <a
-    {{-- add background color if active --}}
-    @php
-        $style = "display: inline-block;";
-        if ($active) $style .= " background-color:red";
-    @endphp
 
-    {{ $attributes(["style" => $style]) }}
-    href="#">
+@php
+    # add background color if active
+    $class = "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap
+             bg-transparent";
+    if ($active) $class .= " bg-purple-600 text-white";
+    else $class .= " bg-white hover:bg-gray-100 text-gray-700"
+@endphp
+
+
+<a
+    {{ $attributes->merge(["class" => $class]) }}
+>
         {{ $slot }}
-    </a>
-</li>
+</a>

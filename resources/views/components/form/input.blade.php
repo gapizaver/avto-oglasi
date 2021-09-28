@@ -1,4 +1,4 @@
-@props(['name', "type" => "text"])
+@props(['name', "type" => "text", "oldVal"])
 
 @php
     $class = "px-2 py-2 placeholder-gray-500 text-blueGray-600 relative bg-white
@@ -15,8 +15,10 @@
         {{ $attributes->merge(["class" => $class]) }}
         type="{{ $type }}"
         name="{{ $name }}"
+        @unless ($type == "password")
+            value="{{ old($name, $oldVal ?? "") }}"
+        @endunless
     >
 
     <x-form.error name="{{ $name }}" />
 </label>
-

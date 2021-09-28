@@ -54,4 +54,11 @@ Route::post("logout", [SessionController::class, "destroy"])->middleware("auth")
 Route::middleware('auth')->group(function () {
     Route::get("/createad", [AdController::class, "create"]);
     Route::post("/createad", [AdController::class, "store"]);
+    Route::put("/ad/{ad}", [AdController::class, "update"]);
+    Route::delete("/ad/{ad}", [AdController::class, "delete"])->middleware("owner");
+
+    Route::get("/my-ads", [AdController::class, "myAds"]);
+
+    Route::get('edit/{ad}', [AdController::class, "updateView"])->middleware("owner");
+
 });

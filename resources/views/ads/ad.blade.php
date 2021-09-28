@@ -20,9 +20,11 @@
             <x-card.property property="Motor" value="{{ $ad->displacement .' L, '. $ad->horses .' KM' }}" />
         </div>
 
-        <p class="my-5 p-3 text-gray-700 text-sm bg-gray-100 rounded-md">
-            {{ $ad->desc }}
-        </p>
+        @if ($ad->desc != "")
+            <p class="my-5 p-3 text-gray-700 text-sm bg-gray-100 rounded-md">
+                {{ $ad->desc }}
+            </p>
+        @endif
 
         <h2 class="text-2xl font-extrabold text-center text-gray-700">
             {{ $ad->price }} €

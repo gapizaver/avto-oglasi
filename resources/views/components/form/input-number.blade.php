@@ -1,4 +1,4 @@
-@props(['name'])
+@props(['name', "oldVal"])
 
 @php
     $class = "px-2 py-2 placeholder-gray-500 text-blueGray-600 relative bg-white
@@ -16,6 +16,7 @@
         type="number"
         maxlength="9"
         name="{{ $name }}"
+        value="{{ old($name, $oldVal ?? "") }}"
     >
 
     <x-form.error name="{{ $name }}" />

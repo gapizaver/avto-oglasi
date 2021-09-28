@@ -22,6 +22,12 @@
             <x-header-button href="/createad">
                 Objavi oglas
             </x-header-button>
+
+            @auth
+                <x-header-button href="/my-ads">
+                    Moji oglasi
+                </x-header-button>
+            @endauth
         </div>
 
         <div>

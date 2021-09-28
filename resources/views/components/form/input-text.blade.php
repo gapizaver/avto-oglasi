@@ -1,4 +1,4 @@
-@props(['name'])
+@props(['name', "oldVal"])
 
 @php
     $class = "px-2 py-2 placeholder-gray-500 text-blueGray-600 relative bg-white
@@ -14,6 +14,7 @@
     <textarea
         {{ $attributes->merge(["class" => $class]) }}
         name="{{ $name }}"
+        value="{{ old($name, $oldVal ?? "")  }}"
     >
     </textarea>
 

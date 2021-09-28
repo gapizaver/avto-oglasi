@@ -16,6 +16,7 @@
         type="number"
         placeholder="min"
         name="{{ $name }}Min"
+        value="{{ old($name . 'Min') }}"
     >
 
     <input
@@ -23,8 +24,8 @@
         type="number"
         placeholder="max"
         name="{{ $name }}Max"
+        value="{{ old($name . 'Max') }}"
     >
 
     <x-form.error name="{{ $name }}" />
 </label>
-

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Ad;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AdController extends Controller
 {
@@ -27,8 +29,15 @@ class AdController extends Controller
                 "fuel",
                 "body_type",
                 "transmission",
-                "images"
+                "images",
+                "imgUpdate",
             ]))->paginate(10)
+        ]);
+    }
+
+    public function myAds() {
+        return view("ads.my", [
+            "ads" => Ad::where("user_id", "=", auth()->user()->id)->paginate(10)
         ]);
     }
 
@@ -36,13 +45,12 @@ class AdController extends Controller
         return view("ads.create");
     }
 
-    public function store() {
-        // validation for publishing an ad
-        $attributes = request()->validate([
+    private function validateRequest() {
+        return request()->validate([
             "condition" => ["required", Rule::in(["n", "u", "c"])],
             "model" => ["required", "max:255"],
             "brand" => ["required", "max:255"],
-            "price" => ["required", "integer"],
+            "price" => ["required", "integer", "max:20000000"],
             "body_type" =>
             ["required",
             Rule::in([
@@ -62,9 +70,48 @@ class AdController extends Controller
             "fuel" => ["required", Rule::in(["g", "d", "e", "h", "b"])],
             "transmission" => ["required", Rule::in(["m", "a"])],
             "desc" => ["max:10000"],
-            "images.*" => ["image"]
+            "images.*" => ["image"],
         ]);
+    }
 
+    public function update(Ad $ad) {
+        $attributes = $this->validateRequest();
+
+        // delete old and store new images
+        if (request()->hasFile("images")) {
+            $attributes["images"] = "";
+
+            foreach(request()->file('images') as $key => $file) {
+                $attributes["images"] .= " ". $file->store("/images", "public");
+            }
+
+            // delete old images
+            if ($ad->images != "") {
+                // make array of images paths
+                $oldImages = explode(" ", trim($ad->images));
+
+                // delete old images
+                Storage::disk("public")->delete($oldImages);
+            }
+        }
+
+        // save updates
+        Ad::find($ad->id)->update($attributes);
+
+        return redirect("/ad/" . $ad->id)->with("success", "Oglas je bil uspešno posodobljen.");
+    }
+
+    public function updateView(Ad $ad) {
+        return view("ads.update", [
+            "ad" => $ad
+        ]);
+    }
+
+    public function store() {
+        // validation for publishing an ad
+        $attributes = $this->validateRequest();
+
+        // store images
         $attributes["images"] = "";
         if (request()->hasFile("images")) {
             foreach(request()->file('images') as $key => $file) {
@@ -75,13 +122,21 @@ class AdController extends Controller
         // add id with publisher's id
         $ad = Ad::create(array_merge($attributes, ["user_id" => auth()->user()->id]));
 
-        // store images
-        if (request()->hasFile("images")) {
-            foreach(request()->file('images') as $key => $file) {
+        return redirect("/ad/" . $ad->id)->with("success", "Oglas je bil uspešno ustvarjen.");
+    }
 
-            }
+    public function delete(Ad $ad) {
+        // delete images
+        if ($ad->images != "") {
+            // make array of images paths
+            $oldImages = explode(" ", trim($ad->images));
+
+            // delete old images
+            Storage::disk("public")->delete($oldImages);
         }
 
-        return redirect("/ad/" . $ad->id)->with("success", "Oglas je bil uspešno ustvarjen.");
+        $ad->delete();
+
+        return redirect()->back()->with("success", "Oglas je bil uspešno izbrisan");
     }
 }

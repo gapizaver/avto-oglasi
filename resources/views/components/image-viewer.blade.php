@@ -10,13 +10,14 @@
 @endphp
 
 <div class="my-6 p-6 text-gray-700 text-sm bg-gray-100 rounded-md">
-    @if (count($images) > 1)
+    @if (count($images) > 0)
     <img
         id="img-main"
         class="mx-auto rounded-md shadow-md"
         style="max-height: 515px;"
         src="{{ asset($images[0]) }}">
 
+        @if (count($images) > 1)
         <div class="mt-2">
             @foreach ($images as $image)
                 @php
@@ -40,6 +41,7 @@
                 >
             @endforeach
         </div>
+        @endif
     @else
         <p class="italic text-gray-700 text-center text-sm"> Oglas je brez slike </p>
     @endif

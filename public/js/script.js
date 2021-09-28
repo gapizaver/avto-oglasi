@@ -25,6 +25,19 @@ function onClick() {
 
 
 $(document).ready(function(){
+    // toggle menu on mobile
+    $("#menu-button").click(function(e) {
+        if ($("#header-menu").hasClass("hidden")) {
+            $("#header-menu").slideDown();
+        } else {
+            $("#header-menu").slideUp(400, "swing", function() {
+                $("#header-menu").css("display", "");
+            });
+        }
+
+        $("#header-menu").toggleClass("hidden");
+    });
+
     // change main image in ad.blade
     $(".img-sm").click(function(e){
         $("#img-main").attr("src", this.src);

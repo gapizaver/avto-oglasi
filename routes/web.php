@@ -19,9 +19,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('ads.index');
+    return view('landing');
 });
 
+Route::get('/search', function () {
+    return view("ads.index");
+});
 
 Route::get('/results', [AdController::class, "search"])->name("results");
 
@@ -39,6 +42,7 @@ Route::get('user/{user}', function (User $user) {
     ]);
 });
 
+
 // guest
 Route::middleware('guest')->group(function () {
     Route::get("/register", [RegisterController::class, "create"]);
@@ -48,7 +52,7 @@ Route::middleware('guest')->group(function () {
     Route::post("/session", [SessionController::class, "store"]);
 });
 
-Route::post("logout", [SessionController::class, "destroy"])->middleware("auth");
+
 
 // logged in
 Route::middleware('auth')->group(function () {
@@ -60,4 +64,6 @@ Route::middleware('auth')->group(function () {
     Route::get("/my-ads", [AdController::class, "myAds"]);
 
     Route::get('edit/{ad}', [AdController::class, "updateView"])->middleware("owner");
+
+    Route::post("logout", [SessionController::class, "destroy"]);
 });

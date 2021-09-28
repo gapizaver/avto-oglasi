@@ -60,5 +60,4 @@ Route::middleware('auth')->group(function () {
     Route::get("/my-ads", [AdController::class, "myAds"]);
 
     Route::get('edit/{ad}', [AdController::class, "updateView"])->middleware("owner");
-
 });

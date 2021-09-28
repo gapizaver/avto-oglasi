@@ -1,10 +1,14 @@
 @props(["images"])
 
 @php
-    $images = explode(" ", trim($images));
+    if ($images != "") {
+        $images = explode(" ", trim($images));
 
-    for ($i=0; $i < sizeof($images); $i++) {
-        $images[$i] = "storage/" . $images[$i];
+        for ($i=0; $i < sizeof($images); $i++) {
+            $images[$i] = "storage/" . $images[$i];
+        }
+    } else {
+        $images = [];
     }
 
 @endphp

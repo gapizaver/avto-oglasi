@@ -6,7 +6,7 @@
         {{-- SEARCH PARAMETERS --}}
 
         {{-- brand --}}
-        <x-form.brand-input />
+        <x-form.brand-input :all="true" />
 
         {{-- model --}}
         <x-form.input name="model">

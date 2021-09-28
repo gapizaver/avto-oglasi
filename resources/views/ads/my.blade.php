@@ -1,10 +1,10 @@
 <x-layout>
     <x-canvas>
-        @unless (count($ads) == 0)
+        @if ($ads->count())
             <x-dropdown-menu />
 
             @foreach ($ads as $ad)
-                <x-card.card :ad=$ad :options=true />
+                <x-card.card :ad=$ad :options="true" />
             @endforeach
 
             {{ $ads->links() }}
@@ -15,6 +15,6 @@
                     Objavi oglas
                 </a>
             </p>
-        @endunless
+        @endif
     </x-canvas>
 </x-layout>

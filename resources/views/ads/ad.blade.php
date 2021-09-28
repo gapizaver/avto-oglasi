@@ -1,5 +1,5 @@
 <x-layout>
-    <x-canvas class="shadow-md py-8">
+    <x-canvas class="shadow-md pt-8">
 
         <h2 class="text-2xl font-extrabold text-gray-700">
             {{ ucfirst($ad->brand) }} {{ $ad->model }}
@@ -58,5 +58,9 @@
                 <span class="underline inline-block pt-1">{{ $ad->publisher->name }}</span>
             </a>
         </h4>
+
+        <p class="text-gray-700 text-xs text-right py-2">
+            oglas objavljen {{ $ad->created_at->format("j.n.Y") }} ob {{ $ad->created_at->format("G:i") }}
+        </p>
     </x-canvas>
 </x-layout>

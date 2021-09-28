@@ -87,8 +87,10 @@ class Ad extends Model
 
         // CAR PARAMETERS
         // brand
-        $query->when($filters["brand"] ?? false, fn($query, $search) =>
-            $query->where("brand", $search));
+        if (($filters["brand"] ?? "") != "*") {
+            $query->when($filters["brand"] ?? false, fn($query, $search) =>
+                $query->where("brand", $search));
+        }
 
         // model
         $query->when($filters["model"] ?? false, fn($query, $search) =>

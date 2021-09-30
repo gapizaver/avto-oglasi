@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdController;
+use App\Http\Controllers\FavouritesController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
 use App\Models\Ad;
@@ -63,7 +64,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get("/my-ads", [AdController::class, "myAds"]);
 
-    Route::get('edit/{ad}', [AdController::class, "updateView"])->middleware("owner");
+    Route::get('/edit/{ad}', [AdController::class, "updateView"])->middleware("owner");
 
-    Route::post("logout", [SessionController::class, "destroy"]);
+    Route::post("/logout", [SessionController::class, "destroy"]);
+
+    Route::get("/fav", [FavouritesController::class, "show"]);
+    Route::post("/fav/{ad}", [FavouritesController::class, "store"]);
+    Route::delete("/fav/{ad}", [FavouritesController::class, "delete"]);
 });

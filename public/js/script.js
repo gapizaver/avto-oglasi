@@ -35,6 +35,26 @@ $(document).ready(function(){
         $(this).parent().parent().slideUp();
     });
 
+    // fill add-favourite button on hover
+    $(".add-fav-ico").hover(
+        function() {
+            $(this).find("svg").attr("fill", "#FCD34D");
+        },
+        function() {
+            $(this).find("svg").attr("fill", "none");
+        }
+    );
+
+    // remove fill in remove-favourite button on hover
+    $(".rem-fav-ico").hover(
+        function() {
+            $(this).find("svg").attr("fill", "none");
+        },
+        function() {
+            $(this).find("svg").attr("fill", "#FCD34D");
+        }
+    );
+
     // toggle menu on mobile
     $("#menu-button").click(function(e) {
         if ($("#header-menu").hasClass("hidden")) {

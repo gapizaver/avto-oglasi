@@ -40,11 +40,17 @@
             </x-header-button>
 
             <hr class="border-white mx-auto w-3/5 md:hidden">
+
+            <x-header-button href="/fav">
+                Priljubljeni oglasi
+            </x-header-button>
+
+            <hr class="border-white mx-auto w-3/5 md:hidden">
             @endauth
         </div>
 
         <div>
-            {{-- display login button if guest, otherwise register button --}}
+            {{-- display login & register button if guest, otherwise logout button --}}
             @guest
 
             {{-- login button --}}
@@ -62,15 +68,10 @@
             <form method="POST" action="/logout" class="md:inline-block">
             @csrf
 
-            <button
-                class="w-full text-sm py-3 font-bold hover:bg-purple-700 focus:bg-purple-700
-                    transition duration-300 ease-in-out text-center
-                    md:w-auto md:bg-purple-600 md:border-solid md:border-0 text-gray-50
-                    md:border-b-4 md:hover:bg-purple-600 md:px-4 md:pt-2 md:pb-1 md:inline-block
-                    bg-purple-500 md:border-purple-600"
-                type="submit"
-            >
-                Odjava
+            <button type="submit">
+                <x-header-button>
+                    Odjava
+                </x-header-button>
             </button>
 
             </form>

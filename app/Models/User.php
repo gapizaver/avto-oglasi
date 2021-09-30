@@ -24,6 +24,8 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $with = ["favs"];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -52,5 +54,10 @@ class User extends Authenticatable
     // get the users ads
     public function ads() {
         return $this->hasMany(Ad::class, "user_id");
+    }
+
+    // get favourite ads
+    public function favs() {
+        return $this->belongsToMany(Ad::class, "ad_user");
     }
 }

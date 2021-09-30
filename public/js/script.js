@@ -25,6 +25,16 @@ function onClick() {
 
 
 $(document).ready(function(){
+    // remove notifications after 8 seconds
+    setTimeout(function() {
+        $(".notification").slideUp();
+    }, 5000);
+
+    // remove notification when user clicks "x"
+    $(".remove-notification").click(function(e) {
+        $(this).parent().parent().slideUp();
+    });
+
     // toggle menu on mobile
     $("#menu-button").click(function(e) {
         if ($("#header-menu").hasClass("hidden")) {

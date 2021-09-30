@@ -22,12 +22,18 @@
     <div class="flex flex-col min-h-screen justify-between">
     @include("_header")
 
-        {{-- flash messages --}}
-        <x-flash-message key="success" />
+    {{-- flash messages --}}
+    @if (session()->has("success"))
+        <x-notification.success>{{ session("success") }}</x-notification.success>
+    @elseif ($errors->count())
+        <x-notification.error>
+            Prišlo je do napake. Popravite vnos in poskusite ponovno.
+        </x-notification.error>
+    @endif
 
-        {{ $slot }}
+    {{ $slot }}
 
-        @include("_footer")
+    @include("_footer")
     </div>
 </body>
 </html>

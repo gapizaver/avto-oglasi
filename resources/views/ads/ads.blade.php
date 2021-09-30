@@ -11,7 +11,7 @@
         @else
             <p class="text-gray-700 text-center">
                 Za vnešene parametre ni bilo najdenih oglasov.
-                <a class="font-bold underline" href="/">
+                <a class="font-bold underline" href="/search">
                     Išči ponovno
                 </a>
             </p>

@@ -23,7 +23,7 @@ class SessionController extends Controller
         if (auth()->attempt($attributes)){
             session()->regenerate();
             // redirect with a success flash message
-            return redirect("/")->with("success", "Dobrodošel!");
+            return redirect("/");
         }
 
         // auth failed
@@ -38,6 +38,6 @@ class SessionController extends Controller
     {
         auth()->logout();
 
-        return redirect("/")->with("success", "Nasvidenje!");
+        return redirect("/");
     }
 }
